@@ -49,3 +49,12 @@ class Monstre(Creature):
         if resistances is None:
             resistances = []
         self.resistances = resistances
+
+    def afficher_caracteristiques(self):
+        print("\n--- MONSTRE ---")
+        print("Nom :", self.nom)
+        print("Description :", self.description)
+        print("PV :", self.pv)
+        print("Défense :", self.defense)
+        print("Type dégâts :", self.type_degats)
+        print("Résistances :", self.resistances)
