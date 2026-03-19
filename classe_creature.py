@@ -58,3 +58,24 @@ class Monstre(Creature):
         print("Défense :", self.defense)
         print("Type dégâts :", self.type_degats)
         print("Résistances :", self.resistances)
+
+
+CATALOGUE_HEROS = [
+    {"nom": "Guerrier", "description": "Brave combattant proche du corps à corps",
+        "pv": 35, "defense": 12},
+    {"nom": "Magicien", "description": "Maître de la magie offensive",
+        "pv": 25, "defense": 10},
+    {"nom": "Archer", "description": "Expert du combat à distance",
+        "pv": 28, "defense": 11},
+    {"nom": "Paladin", "description": "Guerrier sacré protecteur",
+        "pv": 40, "defense": 14},
+    {"nom": "Assassin", "description": "Combattant furtif et rapide",
+        "pv": 26, "defense": 13},
+]
+
+CATALOGUE_MONSTRES = [
+    Monstre("Gobelin", "Petite créature rusée", 18, 9, "Perçant", 1, 4),
+    Monstre("Squelette", "Guerrier mort-vivant", 25, 10, "Tranchant", 1, 6),
+    Monstre("Dragon", "Seigneur des flammes", 60, 16, "Feu", 3, 8, ["Feu"]),
+    Monstre("Loup", "Bête sauvage agile", 22, 10, "Tranchant", 1, 6),
+]
