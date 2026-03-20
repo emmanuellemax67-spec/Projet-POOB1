@@ -126,4 +126,99 @@ while combat_en_cours:
                         "Votre choix : ", 1, len(heros_vivants_liste))
                     cible = heros_vivants_liste[choix_cible - 1]
 
+                jet = lancer_des(1, 20)
+                print(creature.nom, "lance 1d20 :", jet)
+
+                if creature in heros:
+                    degats_normaux = creature.arme.lancer_degats()
+                else:
+                    degats_normaux = lancer_des(
+                        creature.nb_des, creature.faces)
+
+                degats_normaux = appliquer_meteo(
+                    degats_normaux, creature.type_degats, meteo)
+
+                if jet == 1:
+                    creature.pv = creature.pv - degats_normaux
+                    print("Echec critique !", creature.nom, "se blesse pour",
+                          degats_normaux, "dégâts. PV restants :", creature.pv)
+
+                elif jet == 20:
+                    degats = degats_normaux * 2
+                    if creature.type_degats in cible.resistances:
+                        degats = degats // 2
+                        print("Résistance !", cible.nom,
+                              "résiste et ne subit que", degats, "dégâts.")
+                    cible.pv = cible.pv - degats
+                    print("Réussite critique !", cible.nom, "subit",
+                          degats, "dégâts. PV restants :", cible.pv)
+
+                elif jet > cible.defense:
+                    if creature.type_degats in cible.resistances:
+                        degats_normaux = degats_normaux // 2
+                        print("Résistance !", cible.nom,
+                              "résiste et ne subit que", degats_normaux, "dégâts.")
+                    cible.pv = cible.pv - degats_normaux
+                    print("Touché !", cible.nom, "subit", degats_normaux,
+                          "dégâts. PV restants :", cible.pv)
+
+                else:
+                    print("Raté ! Le jet", jet, "est inférieur à la défense de",
+                          cible.nom, "(", cible.defense, ")")
+
+            elif choix_action == 2:
+                print("\nChoisissez une cible à soigner :")
+                if creature in heros:
+                    heros_vivants_liste = []
+                    for h in heros:
+                        if h.est_vivant():
+                            heros_vivants_liste.append(h)
+                    for j, c in enumerate(heros_vivants_liste, 1):
+                        print(j, "-", c.nom, "- PV:", c.pv)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(heros_vivants_liste))
+                    cible = heros_vivants_liste[choix_cible - 1]
+                else:
+                    monstres_vivants_liste = []
+                    for m in monstres:
+                        if m.est_vivant():
+                            monstres_vivants_liste.append(m)
+                    for j, c in enumerate(monstres_vivants_liste, 1):
+                        print(j, "-", c.nom, "- PV:", c.pv)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(monstres_vivants_liste))
+                    cible = monstres_vivants_liste[choix_cible - 1]
+
+                soin = lancer_des(2, 8)
+                cible.pv = cible.pv + soin
+                print(creature.nom, "soigne", cible.nom, "de",
+                      soin, "PV. PV restants :", cible.pv)
+
+            elif choix_action == 3:
+                print("\nChoisissez un allié à booster :")
+                if creature in heros:
+                    heros_vivants_liste = []
+                    for h in heros:
+                        if h.est_vivant():
+                            heros_vivants_liste.append(h)
+                    for j, c in enumerate(heros_vivants_liste, 1):
+                        print(j, "-", c.nom, "- Défense:", c.defense)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(heros_vivants_liste))
+                    cible = heros_vivants_liste[choix_cible - 1]
+                else:
+                    monstres_vivants_liste = []
+                    for m in monstres:
+                        if m.est_vivant():
+                            monstres_vivants_liste.append(m)
+                    for j, c in enumerate(monstres_vivants_liste, 1):
+                        print(j, "-", c.nom, "- Défense:", c.defense)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(monstres_vivants_liste))
+                    cible = monstres_vivants_liste[choix_cible - 1]
+
+                cible.defense = cible.defense + 3
+                print(creature.nom, "booste la défense de", cible.nom,
+                      "de +3. Défense maintenant :", cible.defense)
+
 
