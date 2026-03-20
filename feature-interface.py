@@ -221,4 +221,48 @@ while combat_en_cours:
                 print(creature.nom, "booste la défense de", cible.nom,
                       "de +3. Défense maintenant :", cible.defense)
 
+            elif choix_action == 4:
+                print("\nChoisissez un ennemi à affaiblir :")
+                if creature in heros:
+                    monstres_vivants_liste = []
+                    for m in monstres:
+                        if m.est_vivant():
+                            monstres_vivants_liste.append(m)
+                    for j, c in enumerate(monstres_vivants_liste, 1):
+                        print(j, "-", c.nom, "- Défense:", c.defense)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(monstres_vivants_liste))
+                    cible = monstres_vivants_liste[choix_cible - 1]
+                else:
+                    heros_vivants_liste = []
+                    for h in heros:
+                        if h.est_vivant():
+                            heros_vivants_liste.append(h)
+                    for j, c in enumerate(heros_vivants_liste, 1):
+                        print(j, "-", c.nom, "- Défense:", c.defense)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(heros_vivants_liste))
+                    cible = heros_vivants_liste[choix_cible - 1]
+
+                cible.defense = cible.defense - 3
+                print(creature.nom, "affaiblit la défense de", cible.nom,
+                      "de -3. Défense maintenant :", cible.defense)
+
+    heros_vivants = 0
+    for hero in heros:
+        if hero.est_vivant():
+            heros_vivants += 1
+
+    monstres_vivants = 0
+    for monstre in monstres:
+        if monstre.est_vivant():
+            monstres_vivants += 1
+
+    if heros_vivants == 0:
+        print("\nDéfaite ! Tous les héros sont morts.")
+        combat_en_cours = False
+
+    elif monstres_vivants == 0:
+        print("\nVictoire ! Tous les monstres sont vaincus !")
+        combat_en_cours = False
 
