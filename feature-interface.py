@@ -80,4 +80,50 @@ for i in range(len(toutes_creatures) - 1):
             temp = toutes_creatures[i]
             toutes_creatures[i] = toutes_creatures[j]
             toutes_creatures[j] = temp
+print("\n--- ORDRE DE JEU ---")
+for creature in toutes_creatures:
+    print(creature.nom, ":", creature.initiative)
+
+meteo = choisir_meteo()
+
+print("\n--- COMBAT ---")
+
+combat_en_cours = True
+
+while combat_en_cours:
+    print("\n--- Nouveau round ---")
+    declencher_piege(toutes_creatures)
+
+    for creature in toutes_creatures:
+        if creature.est_vivant():
+            print("\nC'est au tour de", creature.nom)
+            print("1 - Attaque")
+            print("2 - Soin")
+            print("3 - Buff (augmente la défense d'un allié de +3)")
+            print("4 - Debuff (réduit la défense d'un ennemi de -3)")
+            choix_action = saisir_entier("Choisissez une action : ", 1, 4)
+
+            if choix_action == 1:
+                print("\nChoisissez une cible :")
+                if creature in heros:
+                    monstres_vivants_liste = []
+                    for m in monstres:
+                        if m.est_vivant():
+                            monstres_vivants_liste.append(m)
+                    for j, c in enumerate(monstres_vivants_liste, 1):
+                        print(j, "-", c.nom, "- PV:", c.pv)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(monstres_vivants_liste))
+                    cible = monstres_vivants_liste[choix_cible - 1]
+                else:
+                    heros_vivants_liste = []
+                    for h in heros:
+                        if h.est_vivant():
+                            heros_vivants_liste.append(h)
+                    for j, c in enumerate(heros_vivants_liste, 1):
+                        print(j, "-", c.nom, "- PV:", c.pv)
+                    choix_cible = saisir_entier(
+                        "Votre choix : ", 1, len(heros_vivants_liste))
+                    cible = heros_vivants_liste[choix_cible - 1]
+
 
